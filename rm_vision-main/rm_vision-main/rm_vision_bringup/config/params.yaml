@@ -1,0 +1,48 @@
+/camera_node:
+  ros__parameters:
+    camera_name: narrow_stereo
+    camera_info_url: package://rm_vision_bringup/config/camera_info.yaml
+    frame_id: "camera_optical_frame"
+    use_sensor_data_qos: true
+    exposure_time: 5000
+    gain: 8.0
+
+/armor_detector:
+  ros__parameters:
+    debug: true
+    detect_color: 0
+    min_lightness: 120
+
+    classifier_threshold: 0.8
+
+    detector.result_img.jpeg_quality: 50
+
+    light:
+      max_angle: 40.0
+      max_ratio: 0.4
+      min_ratio: 0.08
+
+    armor:
+      max_angle: 35.0
+      max_center_ratio: 1.6
+      min_center_ratio: 0.4
+      min_light_ratio: 0.6
+      max_large_center_distance: 5.0
+      min_large_center_distance: 3.2
+      max_small_center_distance: 3.2
+      min_small_center_distance: 0.8
+
+/armor_processor:
+  ros__parameters:
+    target_frame: odom
+
+    kf:
+      #   xc    yc    zc    yaw   vxc   vyc   vzc   vyaw  r
+      q: [2e-3, 2e-3, 2e-3, 2e-3, 9e-3, 9e-3, 9e-3, 2e-3, 2e-5]
+      #   xa    ya    za    yaw
+      r: [1e-1, 1e-1, 1e-1, 2e-1]
+
+    tracker:
+      max_match_distance: 0.2
+      tracking_threshold: 5
+      lost_threshold: 30
